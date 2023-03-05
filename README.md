@@ -9,4 +9,4 @@ Deployed on Versel
 
 ![blog-img](https://raw.githubusercontent.com/anisa07/very-smart-blog/main/public/blog.png)
 
-[BLOG](https://very-smart-blog-kvw9c7ox2-anisa07.vercel.app/)
+[BLOG](https://very-smart-blog.vercel.app)
