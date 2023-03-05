@@ -4,10 +4,10 @@ const About = () => {
     <h2 className="text-center text-2xl">About this blog</h2>
     <div className="text text-justify my-3 indent-10">
       This application is built with the latest web technologies to provide the best user experience.
-      I've used a combination of ReactJS and NextJS to build the frontend of the application.
-      Additionally, I've incorporated ChatGPT into the application to enable natural language processing and chatbot functionality.
+      I&apos;ve used a combination of ReactJS and NextJS to build the frontend of the application.
+      Additionally, I&apos;ve incorporated ChatGPT into the application to enable natural language processing and chatbot functionality.
       ChatGPT is a state-of-the-art language model developed by OpenAI, which allows us to provide intelligent responses to user queries and improve the overall user experience.
-      I've also used tRPC, Next Auth, and react-query in this app.
+      I&apos;ve also used tRPC, Next Auth, and react-query in this app.
       Thank you for visiting our About page! This page was also created with the help of ChatGPT.
     </div>
   </div>
