@@ -34,6 +34,7 @@ export const ManageArticle: FC<ManageArticle> = ({ loading, manageArticle, artic
     shortText: generatedArticle?.shortText || articleToEdit?.shortText || ""
   };
 
+  console.log(generationError)
   return <>
     {generatingStatus === "fetching" &&
       <div className="flex items-center">

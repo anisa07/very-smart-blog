@@ -37,7 +37,7 @@ export const exampleRouter = createTRPCRouter({
   generateArticle: protectedProcedure
     .input(z.object({ prompt: z.string() }))
     .query(async ({ input }) => {
-      try {
+      // try {
         const articleResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate an article about ${input.prompt}`));
         const shortTextResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate a short description for the article about ${input.prompt}`));
         const titleResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate a short title for the article about ${input.prompt} `));
@@ -46,9 +46,9 @@ export const exampleRouter = createTRPCRouter({
           shortText: shortTextResponse?.data?.choices[0]?.text?.trim() || "",
           title: titleResponse?.data?.choices[0]?.text?.replace(/"/g, "").trim() || ""
         };
-      } catch (e: unknown) {
+      // } catch (e: unknown) {
         throw "Error generating article";
-      }
+      // }
     }),
 
   getArticles: publicProcedure.input(
