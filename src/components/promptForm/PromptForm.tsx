@@ -14,10 +14,9 @@ export type Prompt = z.infer<typeof promptSchema>;
 
 interface PromptForm {
   loading: boolean,
-  currentTopic: string,
   onSend: ({prompt}: Prompt) => void
 }
-export const PromptForm: FC<PromptForm> = ({ onSend, loading, currentTopic }) => {
+export const PromptForm: FC<PromptForm> = ({ onSend, loading }) => {
   const {
     register,
     handleSubmit,
@@ -27,7 +26,7 @@ export const PromptForm: FC<PromptForm> = ({ onSend, loading, currentTopic }) =>
     resolver: zodResolver(promptSchema),
     mode: "onBlur",
     defaultValues: {
-      prompt: currentTopic || ''
+      prompt: ''
     }
   });
 

@@ -6,6 +6,7 @@ import type { FC } from "react";
 import { useState } from "react";
 import { api } from "../../utils/api";
 import { Loader } from "../loader/Loader";
+import { useGenerate } from "../../hooks/useGenerate";
 
 interface ManageArticle {
   loading: boolean,
@@ -15,36 +16,38 @@ interface ManageArticle {
 }
 
 export const ManageArticle: FC<ManageArticle> = ({ loading, manageArticle, articleToEdit }) => {
-  const [topic, setTopic] = useState("");
-  const { data: generatedArticle, fetchStatus: generatingStatus, error: generationError } =
-    api.example.generateArticle.useQuery({ prompt: topic }, {
-      enabled: !!topic, onSuccess: () => {
-        setTopic("");
-      }
-    });
-
-  const handleGenerate = (data: Prompt) => {
-    setTopic(data.prompt);
-  };
+  const { generating, generationError, onGenerate, topic, generatedData} = useGenerate();
+  // const { data: generatedArticle, fetchStatus: generatingStatus, error: generationError } =
+  //   api.example.generateArticle.useQuery({ prompt: topic }, {
+  //     enabled: !!topic, onSuccess: () => {
+  //       setTopic("");
+  //     }
+  //   });
 
   const currentArticle = {
-    title: generatedArticle?.title || articleToEdit?.title || "",
-    img: articleToEdit?.img || "",
-    text: generatedArticle?.text || articleToEdit?.text || "",
-    shortText: generatedArticle?.shortText || articleToEdit?.shortText || ""
+    title: articleToEdit?.title || generatedData.title,
+    img: articleToEdit?.img || generatedData.img,
+    text: articleToEdit?.text || generatedData.text,
+    shortText: articleToEdit?.shortText || generatedData.shortText
   };
 
-  console.log(generationError)
+  const handleGenerate = async (prompt: Prompt) => {
+    const data = await onGenerate(prompt);
+    // currentArticle.title = data.title;
+    // currentArticle.text = data.text;
+    // currentArticle.shortText = data.description;
+  }
+
   return <>
-    {generatingStatus === "fetching" &&
+    {generating &&
       <div className="flex items-center">
-        <h3>{`Generating article about ${topic}, please wait`}</h3>
+        <h3>{`Generating article about "${topic}", please wait`}</h3>
         <Loader />
       </div>
     }
-    {generationError?.message && <h3 className="text-red-500">{generationError?.message}</h3>}
-    <PromptForm onSend={handleGenerate} loading={generatingStatus === "fetching" || loading} currentTopic={topic} />
-    <ArticleForm onSend={manageArticle} loading={generatingStatus === "fetching" || loading}
+    {generationError && <h3 className="text-red-500">{generationError}</h3>}
+    <PromptForm onSend={handleGenerate} loading={generating || loading} />
+    <ArticleForm onSend={manageArticle} loading={generating || loading}
                  currentArticle={currentArticle} />
   </>;
 };

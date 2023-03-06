@@ -1,8 +1,5 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
-import { openai, createAiRequest } from "../open-ai";
-import type { AxiosResponse } from "axios";
-import type { CreateCompletionResponse } from "openai";
 import type { Article } from "@prisma/client";
 
 export const exampleRouter = createTRPCRouter({
@@ -34,22 +31,26 @@ export const exampleRouter = createTRPCRouter({
       });
     }),
 
-  generateArticle: protectedProcedure
-    .input(z.object({ prompt: z.string() }))
-    .query(async ({ input }) => {
-      // try {
-        const articleResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate an article about ${input.prompt}`));
-        const shortTextResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate a short description for the article about ${input.prompt}`));
-        const titleResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate a short title for the article about ${input.prompt} `));
-        return {
-          text: articleResponse?.data?.choices[0]?.text?.trim() || "",
-          shortText: shortTextResponse?.data?.choices[0]?.text?.trim() || "",
-          title: titleResponse?.data?.choices[0]?.text?.replace(/"/g, "").trim() || ""
-        };
-      // } catch (e: unknown) {
-        throw "Error generating article";
-      // }
-    }),
+  // generateArticle: protectedProcedure
+  //   .input(z.object({ prompt: z.string() }))
+  //   .query(async ({ input }) => {
+  //     try {
+  //       // const articleResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate an article about ${input.prompt}`));
+  //       // const shortTextResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate a short description for the article about ${input.prompt}`));
+  //       // const titleResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate a short title for the article about ${input.prompt} `));
+  //       const result = await createAiRequest(`generate an article about ${input.prompt}`)
+  //       console.log('result', result)
+  //
+  //       return {
+  //         text:  "",
+  //         shortText:  "",
+  //         title:  "",
+  //         result
+  //       };
+  //     } catch (e: unknown) {
+  //       throw "Error generating article";
+  //     }
+  //   }),
 
   getArticles: publicProcedure.input(
     z.object({
