@@ -5,8 +5,8 @@ All features of this stack are used Next.js, tRPC, react-query, Next Auth etc.
 
 This project uses open api to create articles for this blog
 
-Deployed on Versel
+Deployed on Netlify
 
 ![blog-img](https://raw.githubusercontent.com/anisa07/very-smart-blog/main/public/blog.png)
 
-[BLOG](https://very-smart-blog.vercel.app)
+[BLOG](https://vermillion-pegasus-b75188.netlify.app)
