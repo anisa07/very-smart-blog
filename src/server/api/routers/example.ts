@@ -31,27 +31,6 @@ export const exampleRouter = createTRPCRouter({
       });
     }),
 
-  // generateArticle: protectedProcedure
-  //   .input(z.object({ prompt: z.string() }))
-  //   .query(async ({ input }) => {
-  //     try {
-  //       // const articleResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate an article about ${input.prompt}`));
-  //       // const shortTextResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate a short description for the article about ${input.prompt}`));
-  //       // const titleResponse: AxiosResponse<CreateCompletionResponse, unknown> = await openai.createCompletion(createAiRequest(`generate a short title for the article about ${input.prompt} `));
-  //       const result = await createAiRequest(`generate an article about ${input.prompt}`)
-  //       console.log('result', result)
-  //
-  //       return {
-  //         text:  "",
-  //         shortText:  "",
-  //         title:  "",
-  //         result
-  //       };
-  //     } catch (e: unknown) {
-  //       throw "Error generating article";
-  //     }
-  //   }),
-
   getArticles: publicProcedure.input(
     z.object({
       limit: z.number(),

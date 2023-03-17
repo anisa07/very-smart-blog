@@ -3,8 +3,6 @@ import { PromptForm } from "../promptForm/PromptForm";
 import type { Article } from "../articleForm/ArticleForm";
 import { ArticleForm } from "../articleForm/ArticleForm";
 import type { FC } from "react";
-import { useState } from "react";
-import { api } from "../../utils/api";
 import { Loader } from "../loader/Loader";
 import { useGenerate } from "../../hooks/useGenerate";
 
@@ -17,25 +15,16 @@ interface ManageArticle {
 
 export const ManageArticle: FC<ManageArticle> = ({ loading, manageArticle, articleToEdit }) => {
   const { generating, generationError, onGenerate, topic, generatedData} = useGenerate();
-  // const { data: generatedArticle, fetchStatus: generatingStatus, error: generationError } =
-  //   api.example.generateArticle.useQuery({ prompt: topic }, {
-  //     enabled: !!topic, onSuccess: () => {
-  //       setTopic("");
-  //     }
-  //   });
 
   const currentArticle = {
-    title: articleToEdit?.title || generatedData.title,
-    img: articleToEdit?.img || generatedData.img,
-    text: articleToEdit?.text || generatedData.text,
-    shortText: articleToEdit?.shortText || generatedData.shortText
+    title: generatedData.title || articleToEdit?.title || '',
+    img:  generatedData.img || articleToEdit?.img || '',
+    text: generatedData.text || articleToEdit?.text || '',
+    shortText: generatedData.shortText || articleToEdit?.shortText || ''
   };
 
   const handleGenerate = async (prompt: Prompt) => {
-    const data = await onGenerate(prompt);
-    // currentArticle.title = data.title;
-    // currentArticle.text = data.text;
-    // currentArticle.shortText = data.description;
+    await onGenerate(prompt);
   }
 
   return <>
